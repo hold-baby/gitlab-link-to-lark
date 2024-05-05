@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="./icon.png" />
+    <title>config</title>
+    <script src="./3.4.js"></script>
+    <style>
+      #dev-inject {
+        display: none;
+      }
+      .-z-1 {
+        z-index: -1;
+      }
+
+      .origin-0 {
+        transform-origin: 0%;
+      }
+
+      input:focus ~ label,
+      input:not(:placeholder-shown) ~ label {
+        /* @apply transform; scale-75; -translate-y-6; */
+        --tw-translate-x: 0;
+        --tw-translate-y: 0;
+        --tw-rotate: 0;
+        --tw-skew-x: 0;
+        --tw-skew-y: 0;
+        transform: translateX(var(--tw-translate-x))
+          translateY(var(--tw-translate-y)) rotate(var(--tw-rotate))
+          skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y))
+          scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+        --tw-scale-x: 0.75;
+        --tw-scale-y: 0.75;
+        --tw-translate-y: -1.5rem;
+      }
+
+      input:focus ~ label {
+        /* @apply text-black; left-0; */
+        --tw-text-opacity: 1;
+        color: rgba(0, 0, 0, var(--tw-text-opacity));
+        left: 0px;
+      }
+      .loader {
+        width: 50px;
+        aspect-ratio: 1;
+        --c: no-repeat radial-gradient(farthest-side, #514b82 92%, #0000);
+        background:
+          var(--c) 50% 0,
+          var(--c) 50% 100%,
+          var(--c) 100% 50%,
+          var(--c) 0 50%;
+        background-size: 10px 10px;
+        animation: l18 1s infinite;
+        position: relative;
+      }
+      .loader::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        margin: 3px;
+        background: repeating-conic-gradient(#0000 0 35deg, #514b82 0 90deg);
+        -webkit-mask: radial-gradient(
+          farthest-side,
+          #0000 calc(100% - 3px),
+          #000 0
+        );
+        border-radius: 50%;
+      }
+      @keyframes l18 {
+        100% {
+          transform: rotate(0.5turn);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="min-h-screen bg-gray-100 p-0 sm:p-12">
+      <div
+        class="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl"
+      >
+        <h1 class="text-2xl font-bold mb-8">Config</h1>
+        <form id="form" novalidate>
+          <div class="relative z-0 w-full mb-5">
+            <input
+              type="text"
+              name="app"
+              placeholder=" "
+              required
+              class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+            />
+            <label
+              for="app"
+              class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
+              >Enter lark app name</label
+            >
+          </div>
+          <div class="relative z-0 w-full mb-5">
+            <input
+              type="text"
+              name="domain"
+              placeholder=" "
+              class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+            />
+            <label
+              for="domain"
+              class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
+              >Enter domain address (separated by commas)</label
+            >
+          </div>
+          <div
+            class="relative z-0 w-full mb-5 text-sm text-red-600 hidden"
+            id="error"
+          ></div>
+          <div
+            class="relative z-0 w-full mb-5 text-sm text-green-600 hidden"
+            id="success"
+          >
+            success
+          </div>
+          <button
+            id="button"
+            type="button"
+            class="w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-pink-500 hover:bg-pink-600 hover:shadow-lg focus:outline-none"
+          >
+            Submit
+          </button>
+          <div class="text-center mt-5" id="dev-inject">
+            <a
+              href="javascript:(function()%7Bvar s=document.createElement('script');s.src = 'http://localhost:3000/index.js';document.body.appendChild(s);%7D)()"
+              >dev inject script</a
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- loading -->
+    <div id="loading" class="hidden">
+      <div
+        class="fixed inset-0 z-50 bg-black opacity-30 flex items-center justify-center flex-1"
+      >
+        <div class="loader">Loading...</div>
+      </div>
+    </div>
+    <script src="./options.js"></script>
+  </body>
+</html>

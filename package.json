@@ -1,0 +1,17 @@
+{
+  "name": "gitlab-link-to-lark",
+  "description": "一个浏览器插件，用于提供 GitLab 项目中关联的飞书项目 ID 转换为飞书链接。方便在 GitLab 项目中快速跳转查看飞书项目信息 --- build for cyy（づ￣3￣）づ╭❤～",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "NODE_ENV=production gulp build",
+    "dev": "NODE_ENV=development gulp dev"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "4",
+    "gulp-live-server": "^0.0.31",
+    "prettier": "^3.2.5",
+    "rollup": "^4.17.2",
+    "rollup-plugin-dotenv": "^0.5.1"
+  }
+}

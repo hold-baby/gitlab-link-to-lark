@@ -1,0 +1,18 @@
+{
+  "name": "gitlab-link-to-lark",
+  "description": "一个浏览器插件，用于提供 GitLab 项目中关联的飞书项目 ID 转换为飞书链接。方便在 GitLab 项目中快速跳转查看飞书项目信息 --- build for cyy（づ￣3￣）づ╭❤～",
+  "version": "0.0.1",
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "permissions": ["storage", "scripting", "unlimitedStorage"],
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["index.js"]
+    }
+  ],
+  "options_page": "options.html"
+}
