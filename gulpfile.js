@@ -5,6 +5,8 @@ const rollup = require("rollup");
 const fs = require("fs");
 const path = require("path");
 
+const isProd = process.env.NODE_ENV === "production";
+
 function jsIndex() {
   return rollup
     .rollup({
@@ -14,6 +16,20 @@ function jsIndex() {
     .then((bundle) => {
       return bundle.write({
         file: "./dist/index.js",
+        format: "iife",
+      });
+    });
+}
+
+function jsBackground() {
+  return rollup
+    .rollup({
+      input: "./src/js/background.js",
+      plugins: [dotenv()],
+    })
+    .then((bundle) => {
+      return bundle.write({
+        file: "./dist/background.js",
         format: "iife",
       });
     });
@@ -44,7 +60,7 @@ function static() {
 function manifest() {
   const pkg = require("./package.json");
   const manifest = require("./src/manifest.json");
-  manifest.name = pkg.name;
+  manifest.name = isProd ? pkg.name : `${pkg.name}-dev`;
   manifest.description = pkg.description;
   manifest.version = pkg.version;
   fs.writeFileSync(
@@ -54,11 +70,25 @@ function manifest() {
   return Promise.resolve();
 }
 
-if (process.env.NODE_ENV === "production") {
-  exports.build = series(jsOptions, jsIndex, html, static, manifest);
+if (isProd) {
+  exports.build = series(
+    jsOptions,
+    jsIndex,
+    jsBackground,
+    html,
+    static,
+    manifest
+  );
 } else {
-  watch("./src/**/*", series(jsOptions, jsIndex, html));
-  exports.dev = series(jsOptions, jsIndex, html, static, manifest);
+  watch("./src/**/*", series(jsOptions, jsIndex, jsBackground, html));
+  exports.dev = series(
+    jsOptions,
+    jsIndex,
+    jsBackground,
+    html,
+    static,
+    manifest
+  );
   const server = gls.static("dist", 3000);
   server.start();
 }

@@ -24,11 +24,11 @@ npm run build
 
 ## Chrome 商店安装
 
-- TODO
+[应用商店](https://chromewebstore.google.com/detail/gitlab-link-to-lark/ocmkgfnifakgckfeofcoakiniljdjcfp)
 
 # 使用
 
-打开浏览器扩展管理页面，找到 GitLab link to Lark 插件，点击 Options，填写 GitLab 地址和飞书应用名称，点击 Save。
+打开浏览器扩展管理页面，找到 GitLab link to Lark 插件，点击 Options，填写 GitLab 地址和飞书命名空间，点击提交
 
 <img src="./docs/install-4.png" alt="install"  />
 

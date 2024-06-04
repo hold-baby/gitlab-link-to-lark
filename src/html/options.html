@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="./icon.png" />
-    <title>config</title>
+    <title>配置页面</title>
     <script src="./3.4.js"></script>
     <style>
       #dev-inject {
@@ -80,34 +80,45 @@
       <div
         class="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl"
       >
-        <h1 class="text-2xl font-bold mb-8">Config</h1>
+        <h1 class="text-2xl font-bold mb-8">配置</h1>
         <form id="form" novalidate>
           <div class="relative z-0 w-full mb-5">
-            <input
-              type="text"
-              name="app"
-              placeholder=" "
-              required
-              class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-            />
-            <label
-              for="app"
-              class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
-              >Enter lark app name</label
-            >
+            <div>
+              <input
+                type="text"
+                name="app"
+                placeholder=" "
+                required
+                class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+              />
+              <label
+                for="app"
+                class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
+                >飞书命名空间</label
+              >
+            </div>
+            <p class="text-xs text-gray-500">
+              如：https://project.feishu.cn/{命名空间}/story/detail/123456
+            </p>
           </div>
           <div class="relative z-0 w-full mb-5">
-            <input
-              type="text"
-              name="domain"
-              placeholder=" "
-              class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-            />
-            <label
-              for="domain"
-              class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
-              >Enter domain address (separated by commas)</label
-            >
+            <div>
+              <input
+                type="text"
+                name="domain"
+                placeholder=" "
+                class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+              />
+              <label
+                for="domain"
+                class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"
+                >GitLab 域名地址</label
+              >
+            </div>
+            <p class="text-xs text-gray-500">
+              输入 GitLab 域名地址用于匹配激活插件，如 gitlab.com
+              (多个域名触发请用 , 作为分割)
+            </p>
           </div>
           <div
             class="relative z-0 w-full mb-5 text-sm text-red-600 hidden"
@@ -117,14 +128,14 @@
             class="relative z-0 w-full mb-5 text-sm text-green-600 hidden"
             id="success"
           >
-            success
+            配置成功
           </div>
           <button
             id="button"
             type="button"
             class="w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-pink-500 hover:bg-pink-600 hover:shadow-lg focus:outline-none"
           >
-            Submit
+            提交
           </button>
           <div class="text-center mt-5" id="dev-inject">
             <a
@@ -140,7 +151,7 @@
       <div
         class="fixed inset-0 z-50 bg-black opacity-30 flex items-center justify-center flex-1"
       >
-        <div class="loader">Loading...</div>
+        <div class="loader">更新中...</div>
       </div>
     </div>
     <script src="./options.js"></script>

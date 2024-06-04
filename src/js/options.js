@@ -21,10 +21,10 @@ function main() {
       const domain = formData.get("domain");
       const data = { app, domain };
       if (!data.app) {
-        return toggleError("Lark app name is required");
+        return toggleError("请输入飞书命名空间");
       }
       if (!data.domain) {
-        return toggleError("Gitlab domain is required");
+        return toggleError("请输入 Gitlab 地址");
       }
       toggleError();
       await setLarkConfig(data);
