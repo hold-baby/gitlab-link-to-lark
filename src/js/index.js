@@ -1,33 +1,41 @@
-import { getLarkConfig } from "./store";
+import { getLarkConfig, getLarkConfigSync } from "./store";
+import { checkCondition, LARK_DOMAIN_HOST } from "./utils";
+import { MSG_EVENT } from "./event";
 
 main();
 
 async function main() {
   if (!checkCondition()) return;
+
+  // {
+  //   [tid]: {
+  //     locker: Boolean,
+  //     error: Boolean,
+  //     data: Object,
+  //   }
+  // }
+  let cacheMap = new Map();
   const POPOVER_STYLE_ID = "lark-popover-link-style";
   let dom_lark_popover = null;
 
-  const LARK_DOMAIN_HOST = "https://project.feishu.cn";
-
-  let LarkConfig = null;
+  await getLarkConfig();
   const nodeMap = new Map();
+
+  chrome.runtime.onMessage.addListener(function (e) {
+    const { message, data } = e;
+    switch (message) {
+      case MSG_EVENT.GET_LARK_PROJECT_INFO:
+        cacheMap.set(data.tid, {
+          locker: true,
+          error: data.error,
+          data: data.data,
+        });
+        break;
+    }
+  });
 
   initPopover();
   initPageListener();
-
-  // 检查是否满足条件
-  async function checkCondition() {
-    const config = await getLarkConfig();
-    if (!config) return;
-    LarkConfig = config;
-    const domains = config.domain.split(",");
-    if (domains.length === 0) return false;
-    return domains.some((domain) => {
-      return window.location.host.includes(domain);
-    })
-      ? true
-      : false;
-  }
 
   // 初始化 popover 节点
   function initPopover() {
@@ -112,7 +120,17 @@ async function main() {
     dom_lark_popover.style.setProperty("top", `${rect.y}px`);
     dom_lark_popover.style.setProperty("left", `${rect.x - 8}px`);
     dom_lark_popover.style.setProperty("transform", `translate(0%, -102%)`);
-    dom_lark_popover.innerHTML = "Lark Link";
+    const tid = e.target.dataset.tid;
+    const cache = cacheMap.get(tid);
+    let innerHTML = "飞书链接";
+    if (cache) {
+      if (cache.data) {
+        innerHTML = cache.data.name;
+      } else if (cache.error) {
+        innerHTML = "未找到相关信息";
+      }
+    }
+    dom_lark_popover.innerHTML = innerHTML;
   }
 
   // 鼠标移出事件
@@ -128,9 +146,28 @@ async function main() {
 
   // 获取 Lark 项目链接
   function getLarkProjectLink(projectId, type = "m") {
+    const LarkConfig = getLarkConfigSync();
     if (type === "f")
       return `${LARK_DOMAIN_HOST}/${LarkConfig.app}/issue/detail/${projectId}`;
     return `${LARK_DOMAIN_HOST}/${LarkConfig.app}/story/detail/${projectId}`;
+  }
+
+  function fetchLarkProjectInfo(data) {
+    const { app, tid } = data;
+    if (cacheMap.has(tid) && cacheMap.get(tid).locker) return;
+
+    cacheMap.set(tid, {
+      locker: true,
+      error: false,
+      data: null,
+    });
+    chrome.runtime.sendMessage({
+      message: MSG_EVENT.GET_LARK_PROJECT_INFO,
+      data: {
+        app,
+        tid,
+      },
+    });
   }
 
   // 替换项目 ID 为 Lark 项目链接
@@ -141,12 +178,17 @@ async function main() {
       const projectId = $1.split("-")[1];
       const type = $1.split("-")[0];
       isFind = true;
+      const LarkConfig = getLarkConfigSync();
+      const url = getLarkProjectLink(projectId, type);
+      if ($1) {
+        fetchLarkProjectInfo({
+          tid: $1,
+          app: LarkConfig.app,
+        });
+      }
       return `<a class='lark-project-link ${
         className ? className : ""
-      }' href='${getLarkProjectLink(
-        projectId,
-        type
-      )}' target='_blank' data-project-id="${projectId}" >${$1}</a>`;
+      }' href='${url}' target='_blank' data-tid="${$1}" >${$1}</a>`;
     });
     return [isFind, content];
   }

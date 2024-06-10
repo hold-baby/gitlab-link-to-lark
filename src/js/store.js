@@ -25,6 +25,10 @@ export const getLarkConfig = async () => {
   return _GITLAB_LINK_TO_LARK_OPTIONS;
 };
 
+export const getLarkConfigSync = () => {
+  return _GITLAB_LINK_TO_LARK_OPTIONS;
+};
+
 // 设置配置
 export const setLarkConfig = async (value) => {
   const dataString = JSON.stringify(value);

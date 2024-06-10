@@ -3,7 +3,16 @@
 一个浏览器插件，用于提供 GitLab 项目中关联的飞书项目 ID 转换为飞书链接。方便在 GitLab 项目中快速跳转查看飞书项目信息。
 [飞书参考资料](https://bytedance.larkoffice.com/wiki/XusFwYp2ZiqltkkSTaJc7eMdnYb)
 
+# 功能预览
+
+<img src="./docs/preview1.png" alt="preview1"  />
+<img src="./docs/preview2.png" alt="preview2"  />
+
 # 安装
+
+## 商店安装
+
+[Chrome 应用商店](https://chromewebstore.google.com/detail/gitlab-link-to-lark/ocmkgfnifakgckfeofcoakiniljdjcfp)
 
 ## 源码安装
 
@@ -21,10 +30,6 @@ npm run build
 <img src="./docs/install-1.png" alt="install"  />
 <img src="./docs/install-2.png" alt="install"  />
 <img src="./docs/install-3.png" alt="install"  />
-
-## Chrome 商店安装
-
-[应用商店](https://chromewebstore.google.com/detail/gitlab-link-to-lark/ocmkgfnifakgckfeofcoakiniljdjcfp)
 
 # 使用
 

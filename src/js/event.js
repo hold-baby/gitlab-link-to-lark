@@ -1,0 +1,4 @@
+export const MSG_EVENT = {
+  INIT: "INIT",
+  GET_LARK_PROJECT_INFO: "GET_LARK_PROJECT_INFO",
+};
